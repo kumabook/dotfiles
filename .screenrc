@@ -1,0 +1,4 @@
+escape ^Jj
+startup_message off
+shell zsh
+hardstatus alwayslastline "%w"
