@@ -6,6 +6,19 @@
 (setq ns-command-modifier (quote meta))
 (setq ns-alternate-modifier (quote super))
 
+;; character-code
+(set-language-environment  'utf-8)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+;; fonts
+(cond (window-system
+       (set-default-font "M+ 1mn-13")
+       (set-fontset-font (frame-parameter nil 'font)
+			 'japanese-jisx0208
+			 '("M+1MN+IPAG" . "unicode-bmp"))))
+
 ;; add package site
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
