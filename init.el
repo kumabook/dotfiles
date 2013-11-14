@@ -86,6 +86,10 @@
 (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 (define-key global-map (kbd "C-l") 'anything)
 
+;; js2-mode ;;
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
 ;; TODO customize whitespace-mode config
 ;; see http://www.emacswiki.org/emacs/WhiteSpace
 ;(global-whitespace-mode 1)
