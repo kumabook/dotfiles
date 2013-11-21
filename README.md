@@ -2,6 +2,7 @@
 
 Currently, there are following config files.
 
+* .vimrc (for vim)
 * init.el (for emacs)
 * .screenrc (for gnu screen)
 * .zshrc (for zsh)
