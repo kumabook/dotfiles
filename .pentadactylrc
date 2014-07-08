@@ -1,4 +1,5 @@
 set runtimepath=$HOME/.pentadactyl
+set guioptions+=T
 
 loadplugins '\.(js|penta)$'
 group user
