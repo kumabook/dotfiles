@@ -67,3 +67,6 @@ case ${UID} in
         PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
     ;;
 esac
+
+# added by travis gem
+[ -f /Users/kumabook/.travis/travis.sh ] && source /Users/kumabook/.travis/travis.sh

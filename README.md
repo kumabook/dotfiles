@@ -1,15 +1,16 @@
 # My config files
 
-Currently, there are following config files.
+This repository includes my config files.
 
-* .vimrc (for vim)
-* init.el (for emacs)
-* .screenrc (for gnu screen)
-* .zshrc (for zsh)
-* .pentadactylrc (for pentadactyl)
-* .pentadactyl/colors/
-* .pentadactyl/plugins/
+You can create symbolic link following command:
+```
+$sh setup.sh
+```
 
+If you want to remove them, you should run following command:
+```
+$sh clean.sh
+```
 
 This project includes 'Pentadactyl Solarized Theme'.
 https://github.com/claytron/pentadactyl-solarized.

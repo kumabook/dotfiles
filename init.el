@@ -1,6 +1,7 @@
 ; basic key bind
 (global-set-key "\C-h" 'delete-backward-char)
 (global-unset-key "\C-z")
+(define-key global-map [?¥] [?\\])
 
 ;; replace Command and Option
 (setq ns-command-modifier (quote meta))
@@ -16,8 +17,8 @@
 (cond (window-system
        (set-default-font "M+ 1mn-13")
        (set-fontset-font (frame-parameter nil 'font)
-			 'japanese-jisx0208
-			 '("M+1MN+IPAG" . "unicode-bmp"))))
+                         'japanese-jisx0208
+                         '("M+1MN+IPAG" . "unicode-bmp"))))
 
 ;; add package site
 (require 'package)
@@ -35,7 +36,7 @@
           (lambda ()
             (progn
               (local-unset-key "\C-j")
-	      (local-set-key "\C-J" 'eval-print-last-sexp))))
+              (local-set-key "\C-J" 'eval-print-last-sexp))))
 
 (set-frame-position (selected-frame) 0 0)
 (set-frame-size (selected-frame) 200 100)
@@ -43,10 +44,10 @@
   (add-hook 'after-init-hook
             '(lambda ()
                (run-with-idle-timer
-		0.1
-		nil
-		'(lambda ()
-		   (set-frame-parameter nil 'fullscreen 'maximized))))))
+                0.1
+                nil
+                '(lambda ()
+                   (set-frame-parameter nil 'fullscreen 'maximized))))))
 
 
 ;;;; color-theme ;;;;
@@ -63,16 +64,16 @@
 (autoload 'gtags-mode "gtags" "" t)
 (setq gtags-mode-hook
       '(lambda ()
-	 (local-set-key "\M-t" 'gtags-find-tag)
-	 (local-set-key "\M-r" 'gtags-find-rtag)
-	 (local-set-key "\M-s" 'gtags-find-symbol)
-	 (local-set-key "\C-t" 'gtags-pop-stack)
-	 ))
+         (local-set-key "\M-t" 'gtags-find-tag)
+         (local-set-key "\M-r" 'gtags-find-rtag)
+         (local-set-key "\M-s" 'gtags-find-symbol)
+         (local-set-key "\C-t" 'gtags-pop-stack)
+         ))
 (add-hook 'c-mode-common-hook
-	  '(lambda()
-	     (gtags-mode 1)
-	     (gtags-make-complete-list)
-	     ))
+          '(lambda()
+             (gtags-mode 1)
+             (gtags-make-complete-list)
+             ))
 
 ;;;; auto-complete ;;;;
 (require 'auto-complete-config)
@@ -86,13 +87,31 @@
 (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 (define-key global-map (kbd "C-l") 'anything)
 
+;;;; indent ;;;;
+(setq-default c-basic-offset 2
+              tab-width 2
+              indent-tabs-mode nil)
+
 ;; js2-mode ;;
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
+;; prolog-mode ;;
+(setq auto-mode-alist
+      (append '(("\\.pl" . prolog-mode))
+              auto-mode-alist))
+(setq prolog-program-name "gprolog")
+(setq prolog-consult-string "[%f].\n")
+
+;; haskell
+(add-hook 'haskell-mode-hook
+          (lambda ()
+            (progn
+              (turn-on-haskell-simple-indent))))
+
 ;; TODO customize whitespace-mode config
 ;; see http://www.emacswiki.org/emacs/WhiteSpace
-;(global-whitespace-mode 1)
+(global-whitespace-mode 1)
 
 (line-number-mode t)
 (column-number-mode t)
