@@ -8,4 +8,5 @@ ln -s `pwd`/.screenrc  ~/.screenrc
 ln -s `pwd`/.pentadactylrc  ~/.pentadactylrc
 ln -s `pwd`/.pentadactyl  ~/.pentadactyl
 ln -s `pwd`/Brewfile ~/Brewfile
+ln -s `pwd`/Cask ~/Cask
 

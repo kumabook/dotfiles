@@ -3,6 +3,10 @@
 (global-unset-key "\C-z")
 (define-key global-map [?¥] [?\\])
 
+;; Cask
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+
 ;; replace Command and Option
 (setq ns-command-modifier (quote meta))
 (setq ns-alternate-modifier (quote super))
