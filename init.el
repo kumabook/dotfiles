@@ -4,7 +4,7 @@
 (define-key global-map [?¥] [?\\])
 
 ;; Cask
-(require 'cask "~/.cask/cask.el")
+(require 'cask "/usr/local/opt/cask/cask.el")
 (cask-initialize)
 
 ;; replace Command and Option
@@ -122,6 +122,5 @@
 
 (show-paren-mode 1)
 
-(exec-path-from-shell-initialize)
 (setq inhibit-startup-message t)
 (cd "~/")

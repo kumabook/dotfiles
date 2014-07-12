@@ -1,10 +1,16 @@
 update
 
+#cask
+tap phinze/homebrew-cask
+install brew-cask
+
+# util
 install hub
+install nkf
+install markdown
 
 ### emacs
-install emacs --cocoa
-link emacs
+cask install emacs
 install cask
 
 ### android 
@@ -23,3 +29,12 @@ install ruby-build
 install rbenv-gemset
 install rbenv-gem-rehash
 install readline
+
+### haskell
+cask install haskell-platform
+
+# server dev
+install postgresql
+#docker
+install docker
+install boot2docker
