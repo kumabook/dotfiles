@@ -33,6 +33,10 @@ install readline
 ### haskell
 cask install haskell-platform
 
+### scala
+install scala
+install typesafe-activator
+
 # server dev
 install postgresql
 #docker
