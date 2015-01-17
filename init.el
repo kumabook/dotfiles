@@ -1,5 +1,5 @@
 ; basic key bind
-(global-set-key "\C-h" 'delete-backward-char)
+(keyboard-translate ?\C-h ?\C-?)
 (global-unset-key "\C-z")
 (define-key global-map [?¥] [?\\])
 
@@ -85,11 +85,15 @@
 (ac-set-trigger-key "TAB")
 (setq ac-auto-start nil)
 
-;;;; anything ;;;;
-(require 'anything)
-(require 'anything-config)
-(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
-(define-key global-map (kbd "C-l") 'anything)
+;;;; helm ;;;;
+(require 'helm-config)
+(global-set-key (kbd "C-l") 'helm-mini)
+(helm-mode 1)
+(add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
+
+;;;; git-gutter-fringe ;;;;
+(require 'git-gutter-fringe)
+(global-git-gutter-mode)
 
 ;;;; indent ;;;;
 (setq-default c-basic-offset 2
@@ -111,7 +115,17 @@
 (add-hook 'haskell-mode-hook
           (lambda ()
             (progn
-              (turn-on-haskell-simple-indent))))
+;              (turn-on-haskell-simple-indent)
+              (turn-on-haskell-indent)
+              (c-basic-offset 4)
+              (tab-width 4)
+              )))
+
+;; rainbow mode
+(require 'rainbow-mode)
+(add-hook 'css-mode-hook  'rainbow-mode)
+(add-hook 'scss-mode-hook 'rainbow-mode)
+(add-hook 'html-mode-hook 'rainbow-mode)
 
 ;; TODO customize whitespace-mode config
 ;; see http://www.emacswiki.org/emacs/WhiteSpace
