@@ -51,5 +51,11 @@
 (depends-on "rust-mode")
 (depends-on "typescript")
 
+;;;; ruby ;;;;
+(depends-on "rubocop")
+(depends-on "enh-ruby-mode")
+(depends-on "ruby-block")
+
+
 (depends-on "rainbow-mode")
 (depends-on "exec-path-from-shell")
