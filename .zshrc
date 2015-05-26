@@ -70,3 +70,21 @@ esac
 
 # added by travis gem
 [ -f /Users/kumabook/.travis/travis.sh ] && source /Users/kumabook/.travis/travis.sh
+
+
+# git utility with peco
+alias -g   peco_branch='git branch | peco'
+alias -g    peco_stash='git stash list | peco'
+alias -g   peco_commit='echo_first `git log --branches --no-merges --oneline | peco`'
+alias -g   peco_remote='git remote | peco'
+
+alias -g    git_rm_branch='git branch -D `peco_branch`'
+alias -g     git_checkout='git checkout `peco_branch`'
+alias -g    git_stash_pop='git stash pop `peco_stash`'
+alias -g   git_stash_drop='git stash drop `peco_stash`'
+alias -g          git_log='git log --graph --decorate --oneline'
+alias -g  git_cherry-pick='git cherry-pick `peco_commit`'
+
+function echo_first {
+  echo $1
+}
