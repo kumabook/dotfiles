@@ -8,6 +8,7 @@
 (depends-on "helm-git-grep")
 (depends-on "helm-gtags")
 (depends-on "helm-ls-git")
+(depends-on "helm-ghq")
 
 
 (depends-on "auto-complete")

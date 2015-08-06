@@ -87,9 +87,14 @@
 
 ;;;; helm ;;;;
 (require 'helm-config)
+(require 'helm-files)
 (global-set-key (kbd "C-l") 'helm-mini)
 (helm-mode 1)
 (add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
+;;;;;; helm-ghq ;;;;;;
+(add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
+(add-to-list 'exec-path "/Users/kumabook/bin")
+(define-key global-map (kbd "C-'") 'helm-ghq)
 
 ;;;; git-gutter-fringe ;;;;
 (require 'git-gutter-fringe)
