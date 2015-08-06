@@ -1,7 +1,6 @@
 if [ -e $HOME/.setenv ]; then
     . $HOME/.setenv
 fi
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # alias
 alias su_zsh='sudo -H -s'
