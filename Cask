@@ -42,6 +42,7 @@
 (depends-on "io-mode")
 (depends-on "jade-mode")
 (depends-on "js2-mode")
+(depends-on "web-mode")
 (depends-on "markdown-mode")
 (depends-on "yaml-mode")
 (depends-on "coffee-mode")
