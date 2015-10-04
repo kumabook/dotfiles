@@ -99,3 +99,9 @@ function peco-src () {
 zle -N peco-src
 bindkey '^]' peco-src
 
+powerline_config=~/src/github.com/powerline/powerline/powerline/bindings/zsh/powerline.zsh
+if [ -f "$powerline_config" ]
+then
+    powerline-daemon -q
+    . ~/src/github.com/powerline/powerline/powerline/bindings/zsh/powerline.zsh
+fi
