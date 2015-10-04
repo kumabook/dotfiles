@@ -1,5 +1,5 @@
-if [ -e $HOME/.setenv ]; then
-    . $HOME/.setenv
+if [ -e $HOME/.profile ]; then
+    . $HOME/.profile
 fi
 
 # alias
