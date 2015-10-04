@@ -1,44 +1,34 @@
-update
+tap 'caskroom/cask'
 
-#cask
-tap phinze/homebrew-cask
-install brew-cask
+brew 'caskroom/cask/brew-cask'
 
-# util
-install hub
-install nkf
-install markdown
+# shell utility
+brew 'zsh'
+brew 'ghq'
+cask 'iterm2'
+brew 'tmux'
+brew 'reattach-to-user-namespace'
+brew 'peco'
+brew 'hub'
 
-### emacs
-cask install emacs
-install cask
+# programming language
+brew 'go'
+brew 'rust'
+brew 'haskell-stack'
+## brew 'nodebrew'
+brew 'python'
+brew 'rbenv'
+brew 'ruby-build'
 
-### android 
-install android-sdk
-install android-ndk
+# development
+cask 'emacs'
+brew 'cask'
+## brew 'carthage'
+cask 'fabric'
 
-### stm32f4discovery
-install openocd
 
-### node
-install nvm
-
-### ruby
-install rbenv
-install ruby-build
-install rbenv-gemset
-install rbenv-gem-rehash
-install readline
-
-### haskell
-cask install haskell-platform
-
-### scala
-install scala
-install typesafe-activator
-
-# server dev
-install postgresql
-#docker
-install docker
-install boot2docker
+# utility applications
+cask 'firefox'
+cask 'google-chrome'
+cask 'slack'
+cask 'skype'
