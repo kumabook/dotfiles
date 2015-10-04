@@ -7,6 +7,9 @@
 (require 'cask "/usr/local/opt/cask/cask.el")
 (cask-initialize)
 
+;; path
+(exec-path-from-shell-initialize)
+
 ;; replace Command and Option
 (setq ns-command-modifier (quote meta))
 (setq ns-alternate-modifier (quote super))
@@ -93,7 +96,6 @@
 (add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
 ;;;;;; helm-ghq ;;;;;;
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
-(add-to-list 'exec-path "/Users/kumabook/bin")
 (define-key global-map (kbd "C-'") 'helm-ghq)
 
 ;;;; git-gutter-fringe ;;;;
