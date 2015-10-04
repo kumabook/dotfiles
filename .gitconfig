@@ -1,0 +1,15 @@
+[core]
+	autocrlf = input
+[color]
+	ui = true
+[user]
+	name = Hiroki Kumamoto
+	email = kumabook@live.jp
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
+[ghq]
+	root = ~/src
+[credential]
+	helper = osxkeychain

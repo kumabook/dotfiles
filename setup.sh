@@ -8,6 +8,7 @@ ln -s `pwd`/.pentadactylrc  ~/.pentadactylrc
 ln -s `pwd`/.pentadactyl  ~/.pentadactyl
 ln -s `pwd`/Brewfile ~/Brewfile
 ln -s `pwd`/.tmux.conf ~/.tmux.conf
+ln -s `pwd`/.gitconfig ~/.gitconfig
 
 mkdir ~/.emacs.d/
 ln -s `pwd`/init.el ~/.emacs.d/init.el
