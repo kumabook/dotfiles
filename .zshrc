@@ -68,7 +68,7 @@ case ${UID} in
 esac
 
 # added by travis gem
-[ -f /Users/kumabook/.travis/travis.sh ] && source /Users/kumabook/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 
 # git utility with peco
