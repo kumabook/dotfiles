@@ -83,6 +83,29 @@ function echo_first {
   echo $1
 }
 
+# z
+. `brew --prefix`/etc/profile.d/z.sh
+
+# change directory with z
+function peco-z-search() {
+  which peco z > /dev/null
+  if [ $? -ne 0 ]; then
+    echo "Please install peco and z"
+    return 1
+  fi
+  local res=$(z | sort -rn | cut -c 12- | peco)
+  if [ -n "$res" ]; then
+    BUFFER+="cd $res"
+    zle accept-line
+  else
+    return 1
+  fi
+}
+zle -N peco-z-search
+bindkey '^[' peco-z-search
+
+
+# change directory with ghq list
 function peco-src () {
     local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then

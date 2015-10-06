@@ -10,6 +10,7 @@ brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'peco'
 brew 'hub'
+brew  'z'
 
 # programming language
 brew 'go'
