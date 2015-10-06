@@ -32,3 +32,8 @@ cask 'firefox'
 cask 'google-chrome'
 cask 'slack'
 cask 'skype'
+
+#
+# font
+tap 'sanemat/font'
+brew 'ricty', args: ['powerline']
