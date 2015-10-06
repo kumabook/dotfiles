@@ -107,6 +107,11 @@ bindkey '^[' peco-z-search
 
 # change directory with ghq list
 function peco-src () {
+    which peco ghq > /dev/null
+    if [ $? -ne 0 ]; then
+      echo "Please install peco and ghq"
+      return 1
+    fi
     local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
