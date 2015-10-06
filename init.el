@@ -53,8 +53,6 @@
               (local-unset-key "\C-j")
               (local-set-key "\C-J" 'eval-print-last-sexp))))
 
-(set-frame-position (selected-frame) 0 0)
-(set-frame-size (selected-frame) 200 100)
 (when window-system
   (add-hook 'after-init-hook
             '(lambda ()
