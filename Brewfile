@@ -20,6 +20,10 @@ brew 'haskell-stack'
 brew 'python'
 brew 'rbenv'
 brew 'ruby-build'
+cask 'java6'
+cask 'java7'
+brew 'checkstyle'
+brew 'findbugs'
 
 # development
 cask 'emacs'
