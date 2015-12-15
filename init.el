@@ -21,18 +21,20 @@
 (set-keyboard-coding-system 'utf-8)
 
 ;; fonts
-(set-face-attribute 'default nil
-                    :family "Ricty Discord"
-                    :height 140)
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0208
-                  (cons "Ricty Discord" "iso10646-1"))
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0212
-                  (cons "Ricty Discord" "iso10646-1"))
-(set-fontset-font (frame-parameter nil 'font)
-                  'katakana-jisx0201
-                  (cons "Ricty Discord" "iso10646-1"))
+(when (display-graphic-p)
+  (set-face-attribute 'default nil
+                      :family "Ricty Discord"
+                      :height 140)
+  (set-fontset-font (frame-parameter nil 'font)
+                    'japanese-jisx0208
+                    (cons "Ricty Discord" "iso10646-1"))
+  (set-fontset-font (frame-parameter nil 'font)
+                    'japanese-jisx0212
+                    (cons "Ricty Discord" "iso10646-1"))
+  (set-fontset-font (frame-parameter nil 'font)
+                    'katakana-jisx0201
+                    (cons "Ricty Discord" "iso10646-1"))
+  )
 
 
 ;; add package site
@@ -66,7 +68,7 @@
 ;;;; color-theme ;;;;
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-classic)
+(when (display-graphic-p) (color-theme-classic))
 
 
 ;;;; linum ;;;;
@@ -105,8 +107,9 @@
 (define-key global-map (kbd "C-'") 'helm-ghq)
 
 ;;;; git-gutter-fringe ;;;;
-(require 'git-gutter-fringe)
-(global-git-gutter-mode)
+(when (display-graphic-p)
+  (require 'git-gutter-fringe)
+  (global-git-gutter-mode))
 
 ;;;; indent ;;;;
 (setq-default c-basic-offset 2
