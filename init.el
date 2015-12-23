@@ -190,5 +190,22 @@
 
 (show-paren-mode 1)
 
+(defun update-alpha () (set-frame-parameter nil 'alpha frame-alpha))
+(defun up-alpha ()
+  "set frame parameter 'alpha"
+  (interactive)
+  (set 'frame-alpha (min (+ frame-alpha 5) 100))
+  (update-alpha))
+(defun down-alpha ()
+  "set frame parameter 'alpha"
+  (interactive)
+  (set 'frame-alpha (max (- frame-alpha 5) 0))
+  (update-alpha))
+(set 'frame-alpha 90)
+(update-alpha)
+
+(global-set-key (kbd "C-x C-p") 'up-alpha)
+(global-set-key (kbd "C-x C-n") 'down-alpha)
+
 (setq inhibit-startup-message t)
 (cd "~/")
