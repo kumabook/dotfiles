@@ -28,8 +28,16 @@ brew 'findbugs'
 # development
 cask 'emacs'
 brew 'cask'
-## brew 'carthage'
+
+# mobile development
+brew 'carthage'
 cask 'fabric'
+brew 'android-sdk'
+brew 'android-ndk'
+cask 'android-studio'
+cask 'eclipse-platform'
+cask 'genymotion'
+brew 'ant'
 
 
 # utility applications
