@@ -39,6 +39,9 @@ cask 'eclipse-platform'
 cask 'genymotion'
 brew 'ant'
 
+# server developement
+brew 'postgresql'
+brew 'aws-cli'
 
 # utility applications
 cask 'firefox'
@@ -46,7 +49,6 @@ cask 'google-chrome'
 cask 'slack'
 cask 'skype'
 
-#
 # font
 tap 'sanemat/font'
 brew 'ricty', args: ['powerline']
