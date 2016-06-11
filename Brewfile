@@ -24,6 +24,7 @@ cask 'java6'
 cask 'java7'
 brew 'checkstyle'
 brew 'findbugs'
+brew 'kylef/formulae/swiftenv'
 
 # development
 cask 'emacs'

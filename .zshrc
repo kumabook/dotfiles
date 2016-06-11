@@ -134,3 +134,4 @@ then
     powerline-daemon -q
     . ~/src/github.com/powerline/powerline/powerline/bindings/zsh/powerline.zsh
 fi
+if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
