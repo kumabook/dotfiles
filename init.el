@@ -102,10 +102,21 @@
 (require 'helm-files)
 (global-set-key (kbd "C-l") 'helm-mini)
 (helm-mode 1)
-(add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
+(define-key global-map (kbd "M-x") 'helm-M-x)
+;(add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
 ;;;;;; helm-ghq ;;;;;;
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
 (define-key global-map (kbd "C-'") 'helm-ghq)
+
+;;;;;; helm-git-grep ;;;;;;
+(require 'helm-git-grep) ;; Not necessary if installed by package.el
+(global-set-key (kbd "C-c g") 'helm-git-grep)
+(global-set-key (kbd "C-c i") 'helm-git-grep-at-point)
+;; Invoke `helm-git-grep' from isearch.
+(define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
+;; Invoke `helm-git-grep' from other helm.
+(eval-after-load 'helm
+  '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
 
 ;;;; git-gutter-fringe ;;;;
 (when (display-graphic-p)
