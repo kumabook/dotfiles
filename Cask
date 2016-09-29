@@ -42,6 +42,7 @@
 (depends-on "io-mode")
 (depends-on "jade-mode")
 (depends-on "js2-mode")
+(depends-on "json-mode")
 (depends-on "web-mode")
 (depends-on "markdown-mode")
 (depends-on "yaml-mode")
@@ -52,6 +53,7 @@
 (depends-on "slim-mode")
 (depends-on "rust-mode")
 (depends-on "typescript")
+(depends-on "scss-mode")
 
 ;;;; ruby ;;;;
 (depends-on "rubocop")

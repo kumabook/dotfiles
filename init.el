@@ -128,33 +128,49 @@
               tab-width 2
               indent-tabs-mode nil)
 
-;; js2-mode ;;
+;(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; javascript ;;
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (equal web-mode-content-type "jsx")
-      (let ((web-mode-enable-part-face nil))
-        ad-do-it)
-    ad-do-it))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 
-(require 'flycheck)
-(flycheck-define-checker jsxhint-checker
-  "A JSX syntax and style checker based on JSXHint."
+(eval-after-load 'flycheck
+  '(progn
+     (flycheck-add-mode 'javascript-eslint 'web-mode)
+     (flycheck-add-mode 'javascript-eslint 'js2-mode)
+     (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+     '(custom-set-variables
+       '(flycheck-disabled-checkers '(javascript-jshint javascript-jscs))
+       )))
 
-  :command ("jsxhint" source)
-  :error-patterns
-  ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
-  :modes (web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (equal web-mode-content-type "jsx")
-              ;; enable flycheck
-              (flycheck-select-checker 'jsxhint-checker)
-              (flycheck-mode))))
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
+(setq js2-strict-trailing-comma-warning nil)
+(setq js2-strict-missing-semi-warning t)
+(setq js2-missing-semi-one-line-override t)
+(setq js2-strict-inconsistent-return-warning nil)
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+)
+
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; scss mode
+(defun scss-custom ()
+  "scss-mode-hook"
+  (and
+   (set (make-local-variable 'css-indent-offset) 2)
+   (set (make-local-variable 'scss-compile-at-save) nil)
+   )
+  )
+(add-hook 'scss-mode-hook
+  '(lambda() (scss-custom)))
 
 ;; coffee-mode ;;
 ;(autoload 'coffee-mode "js2-mode" nil t)
