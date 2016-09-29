@@ -15,7 +15,6 @@
 (depends-on "elscreen")
 (depends-on "color-theme")
 
-(depends-on "flymake-jslint")
 (depends-on "flymake-easy")
 (depends-on "flycheck")
 
