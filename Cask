@@ -53,6 +53,9 @@
 (depends-on "rust-mode")
 (depends-on "typescript")
 (depends-on "scss-mode")
+(depends-on "elixir-mode")
+(depends-on "elixir-mix")
+(depends-on "alchemist")
 
 ;;;; ruby ;;;;
 (depends-on "rubocop")
