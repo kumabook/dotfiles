@@ -8,7 +8,8 @@
 (cask-initialize)
 
 ;; path
-(exec-path-from-shell-initialize)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;; replace Command and Option
 (setq ns-command-modifier (quote meta))
