@@ -68,6 +68,7 @@ esac
 
 # git utility with peco
 alias -g   peco_branch='git branch -a | peco'
+alias -g            gb='git branch -a | peco'
 alias -g    peco_stash='git stash list | peco'
 alias -g   peco_commit='echo_first `git log --branches --no-merges --oneline | peco`'
 alias -g   peco_remote='git remote | peco'
