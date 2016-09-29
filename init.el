@@ -144,8 +144,12 @@
      (flycheck-add-mode 'javascript-eslint 'js2-mode)
      (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
      '(custom-set-variables
-       '(flycheck-disabled-checkers '(javascript-jshint javascript-jscs))
+       '(flycheck-disabled-checkers '(javascript-jshint javascript-jscs javascript-gjslint))
        )))
+
+(setq-default flycheck-disabled-checkers '(javascript-jshint))
+(setq-default flycheck-disabled-checkers '(javascript-jscs))
+(setq-default flycheck-disabled-checkers '(javascript-gjslint))
 
 (setq js2-strict-trailing-comma-warning nil)
 (setq js2-strict-missing-semi-warning t)
