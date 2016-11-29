@@ -20,7 +20,6 @@ brew 'ruby-build'
 cask 'java'
 brew 'checkstyle'
 brew 'findbugs'
-brew 'kylef/formulae/swiftenv'
 
 # development
 cask 'emacs'
@@ -28,17 +27,14 @@ brew 'cask'
 
 # mobile development
 brew 'carthage'
-cask 'fabric'
 brew 'android-sdk'
 brew 'android-ndk'
 cask 'android-studio'
-cask 'eclipse-platform'
 cask 'genymotion'
 brew 'ant'
 
 # server developement
 brew 'postgresql'
-brew 'aws-cli'
 
 # utility applications
 cask 'firefox'
