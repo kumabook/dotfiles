@@ -1,7 +1,5 @@
 tap 'caskroom/cask'
 
-brew 'caskroom/cask/brew-cask'
-
 # shell utility
 brew 'zsh'
 brew 'ghq'
@@ -16,12 +14,10 @@ brew  'z'
 brew 'go'
 brew 'rust'
 brew 'haskell-stack'
-## brew 'nodebrew'
 brew 'python'
 brew 'rbenv'
 brew 'ruby-build'
-cask 'java6'
-cask 'java7'
+cask 'java'
 brew 'checkstyle'
 brew 'findbugs'
 brew 'kylef/formulae/swiftenv'
