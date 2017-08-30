@@ -2,6 +2,14 @@ if [ -e $HOME/.profile ]; then
     . $HOME/.profile
 fi
 
+if [ -e /usr/local/share/zsh-completions ]; then
+    fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
+autoload -U compinit
+autoload -Uz add-zsh-hook
+compinit -u
+
 # alias
 alias su_zsh='sudo -H -s'
 case "${OSTYPE}" in

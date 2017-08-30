@@ -3,6 +3,7 @@ tap 'caskroom/cask'
 
 # shell utility
 brew 'zsh'
+brew 'zsh-completions'
 brew 'ghq'
 cask 'iterm2'
 brew 'tmux'
