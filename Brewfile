@@ -37,9 +37,11 @@ brew 'ant'
 
 # server developement
 brew 'postgresql'
+brew 'heroku'
 
 # utility applications
 cask 'firefox'
+cask 'firefox-nightly'
 cask 'google-chrome'
 cask 'slack'
 cask 'skype'
