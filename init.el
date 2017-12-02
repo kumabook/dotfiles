@@ -134,9 +134,10 @@
 ;; javascript ;;
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+(add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
 
 (eval-after-load 'flycheck
   '(progn
@@ -155,10 +156,12 @@
 (setq js2-strict-missing-semi-warning t)
 (setq js2-missing-semi-one-line-override t)
 (setq js2-strict-inconsistent-return-warning nil)
+(setq js-switch-indent-offset 2)
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-javascript-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
 )
