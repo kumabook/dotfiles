@@ -47,5 +47,6 @@ cask 'slack'
 cask 'skype'
 
 # font
+cask 'xquartz'
 tap 'sanemat/font'
 brew 'ricty', args: ['powerline']
