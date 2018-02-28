@@ -13,3 +13,5 @@
 	root = ~/src
 [credential]
 	helper = osxkeychain
+[grep]
+	lineNumber = true
