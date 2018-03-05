@@ -103,6 +103,7 @@
 (global-set-key (kbd "C-l") 'helm-mini)
 (helm-mode 1)
 (define-key global-map (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 ;(add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
 ;;;;;; helm-ghq ;;;;;;
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
