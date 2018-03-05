@@ -162,6 +162,7 @@
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
   (setq web-mode-javascript-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
