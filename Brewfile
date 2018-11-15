@@ -23,9 +23,10 @@ cask 'java'
 brew 'checkstyle'
 brew 'findbugs'
 
-# development
+# editor
 cask 'emacs'
 brew 'cask'
+cask 'visual-studio-code'
 
 # mobile development
 brew 'carthage'
