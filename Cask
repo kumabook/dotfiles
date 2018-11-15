@@ -18,7 +18,6 @@
 (depends-on "flymake-easy")
 (depends-on "flycheck")
 
-(depends-on "gtags")
 
 (depends-on "quickrun")
 (depends-on "popwin")
@@ -40,7 +39,7 @@
 
 (depends-on "io-mode")
 (depends-on "jade-mode")
-(depends-on "js2-mode")
+(depends-on "js2-mode", :git "https://github.com/mooz/js2-mode")
 (depends-on "json-mode")
 (depends-on "web-mode")
 (depends-on "markdown-mode")
@@ -51,10 +50,16 @@
 (depends-on "ruby-mode")
 (depends-on "slim-mode")
 (depends-on "rust-mode")
-(depends-on "typescript")
+(depends-on "swift-mode")
+(depends-on "typescript-mode")
+(depends-on "php-mode")
+(depends-on "php-completion"
+        :git "https://github.com/suzuki/php-completion.git"
+        :branch "develop"
+        :files ("*.el" "phpcmp-index-of-*"))
+(depends-on "tide")
 (depends-on "scss-mode")
 (depends-on "elixir-mode")
-(depends-on "elixir-mix")
 (depends-on "alchemist")
 
 ;;;; ruby ;;;;
