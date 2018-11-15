@@ -9,3 +9,4 @@ rm ~/.zshrc
 rm ~/.screenrc
 rm ~/Brewfile
 rm ~/.gitconfig
+rm ~/.gitignore
