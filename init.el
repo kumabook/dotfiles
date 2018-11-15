@@ -2,6 +2,7 @@
 (keyboard-translate ?\C-h ?\C-?)
 (global-unset-key "\C-z")
 (define-key global-map [?¥] [?\\])
+(global-auto-revert-mode 1)
 
 ;; Cask
 (require 'cask "/usr/local/opt/cask/cask.el")
