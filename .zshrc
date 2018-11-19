@@ -1,7 +1,3 @@
-if [ -e $HOME/.profile ]; then
-    . $HOME/.profile
-fi
-
 if [ -e /usr/local/share/zsh-completions ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
@@ -9,6 +5,10 @@ fi
 autoload -U compinit
 autoload -Uz add-zsh-hook
 compinit -u
+
+if [ -e $HOME/.profile ]; then
+    . $HOME/.profile
+fi
 
 # alias
 alias su_zsh='sudo -H -s'
@@ -21,8 +21,6 @@ linux*)
     alias open="gnome-open"
     ;;
 esac
-
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
 # colors
 autoload colors
@@ -55,7 +53,10 @@ bindkey "\e[Z" reverse-menu-complete
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
-
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' menu select=2
+setopt list_types
 
 # prompt
 case ${UID} in
@@ -144,3 +145,13 @@ then
     . ~/src/github.com/powerline/powerline/powerline/bindings/zsh/powerline.zsh
 fi
 if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+eval "$(direnv hook zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/kumabook/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kumabook/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/kumabook/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kumabook/google-cloud-sdk/completion.zsh.inc'; fi
