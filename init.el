@@ -92,11 +92,8 @@
              (gtags-make-complete-list)
              ))
 
-;;;; auto-complete ;;;;
-(require 'auto-complete-config)
-(ac-config-default)
-(ac-set-trigger-key "TAB")
-(setq ac-auto-start nil)
+;;;;;; company-mode ;;;;
+(global-company-mode +1)
 
 ;;;; helm ;;;;
 (require 'helm-config)

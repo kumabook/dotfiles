@@ -11,7 +11,7 @@
 (depends-on "helm-ghq")
 
 
-(depends-on "auto-complete")
+(depends-on "company")
 (depends-on "elscreen")
 (depends-on "color-theme")
 
