@@ -62,6 +62,9 @@
 (depends-on "elixir-mode")
 (depends-on "alchemist")
 
+(depends-on "go-mode")
+(depends-on "company-go")
+
 ;;;; ruby ;;;;
 (depends-on "rubocop")
 (depends-on "enh-ruby-mode")
