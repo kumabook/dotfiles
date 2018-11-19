@@ -30,7 +30,7 @@ cask 'visual-studio-code'
 
 # mobile development
 brew 'carthage'
-brew 'android-sdk'
+cask 'android-sdk'
 brew 'android-ndk'
 cask 'android-studio'
 cask 'genymotion'
@@ -39,6 +39,7 @@ brew 'ant'
 # server developement
 brew 'postgresql'
 brew 'heroku'
+cask 'docker'
 
 # utility applications
 cask 'firefox'
