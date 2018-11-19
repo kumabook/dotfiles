@@ -205,6 +205,14 @@
               (tab-width 4)
               )))
 
+;; swift
+(add-hook 'swift-mode-hook
+          (lambda ()
+            (setq-local tab-width 4)
+            (defvar swift-indent-offset)
+            (setq-local swift-indent-offset 4)))
+
+
 ;; golang
 
 (add-hook 'go-mode-hook 'flycheck-mode)
