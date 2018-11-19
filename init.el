@@ -188,11 +188,6 @@
 (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
 
-;; ruby-block ;;
-(require 'ruby-block)
-(ruby-block-mode t)
-(setq ruby-block-highlight-toggle t)
-
 ;; prolog-mode ;;
 (setq auto-mode-alist
       (append '(("\\.pl" . prolog-mode))
