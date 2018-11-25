@@ -98,6 +98,7 @@
 ;;;; helm ;;;;
 (require 'helm-config)
 (require 'helm-files)
+(require 'helm-for-files)
 (global-set-key (kbd "C-l") 'helm-mini)
 (helm-mode 1)
 (define-key global-map (kbd "M-x") 'helm-M-x)
