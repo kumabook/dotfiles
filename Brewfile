@@ -38,7 +38,7 @@ brew 'ant'
 
 # server developement
 brew 'postgresql'
-brew 'heroku'
+brew 'heroku/brew/heroku'
 cask 'docker'
 
 # utility applications
