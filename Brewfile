@@ -12,6 +12,7 @@ brew 'reattach-to-user-namespace'
 brew 'peco'
 brew 'hub'
 brew  'z'
+brew 'direnv'
 
 # programming language
 brew 'go'
