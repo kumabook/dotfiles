@@ -1,5 +1,6 @@
 [core]
 	autocrlf = input
+	excludesfile = /Users/kumabook/.gitignore
 [color]
 	ui = true
 [user]
