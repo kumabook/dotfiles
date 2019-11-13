@@ -188,6 +188,7 @@
 ;; ruby-mode ;;
 (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
+(setq ruby-insert-encoding-magic-comment nil)
 
 ;; prolog-mode ;;
 (setq auto-mode-alist
