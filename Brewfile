@@ -24,6 +24,7 @@ brew 'ruby-build'
 cask 'java'
 brew 'checkstyle'
 brew 'findbugs'
+brew 'nodejs'
 
 # editor
 cask 'emacs'
@@ -32,14 +33,20 @@ cask 'visual-studio-code'
 
 # mobile development
 brew 'carthage'
+brew 'blender/homebrew-tap/rome'
 cask 'android-sdk'
 cask 'android-studio'
 brew 'ant'
 
 # server developement
 brew 'postgresql'
+brew 'mysql'
 brew 'heroku/brew/heroku'
+brew 'wp-cli'
 cask 'docker'
+
+# misc
+brew 'libidn'
 
 # utility applications
 cask 'firefox'
