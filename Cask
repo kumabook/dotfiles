@@ -49,6 +49,7 @@
 (depends-on "erlang")
 (depends-on "ruby-mode")
 (depends-on "slim-mode")
+(depends-on "haml-mode")
 (depends-on "rust-mode")
 (depends-on "swift-mode")
 (depends-on "typescript-mode")
