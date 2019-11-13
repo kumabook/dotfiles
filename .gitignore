@@ -1,9 +1,13 @@
 # emacs
 *~
 *#
+\.#*
 
 # mac
 .DS_Store
 
 # direnv
 .envrc
+
+
+memo
