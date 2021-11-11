@@ -21,7 +21,7 @@ brew 'haskell-stack'
 brew 'python'
 brew 'rbenv'
 brew 'ruby-build'
-cask 'java'
+cask 'java11'
 brew 'checkstyle'
 brew 'findbugs'
 brew 'nodejs'
@@ -36,6 +36,7 @@ brew 'carthage'
 brew 'blender/homebrew-tap/rome'
 cask 'android-sdk'
 cask 'android-studio'
+brew 'bundletool'
 brew 'ant'
 
 # server developement
@@ -44,12 +45,14 @@ brew 'mysql'
 brew 'heroku/brew/heroku'
 brew 'wp-cli'
 cask 'docker'
+brew 'amazon-ecs-cli'
 
 # misc
 brew 'libidn'
 
 # utility applications
 cask 'firefox'
+cask 'firefox-developer-edition'
 cask 'firefox-nightly'
 cask 'google-chrome'
 cask 'slack'
