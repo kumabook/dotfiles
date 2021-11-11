@@ -1,12 +1,81 @@
-; basic key bind
+;; basic key bind
 (keyboard-translate ?\C-h ?\C-?)
 (global-unset-key "\C-z")
 (define-key global-map [?¥] [?\\])
 (global-auto-revert-mode 1)
 
-;; Cask
-(require 'cask "/usr/local/opt/cask/cask.el")
-(cask-initialize)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'dracula-theme)
+
+(straight-use-package 'helm)
+(straight-use-package 'helm-git-grep)
+(straight-use-package 'helm-gtags)
+(straight-use-package 'helm-ls-git)
+(straight-use-package 'helm-ghq)
+
+(straight-use-package 'company)
+(straight-use-package 'elscreen)
+
+(straight-use-package 'flymake-easy)
+(straight-use-package 'flycheck)
+
+(straight-use-package 'quickrun)
+(straight-use-package 'popwin)
+(straight-use-package 'powerline)
+
+;;;; git ;;;;
+(straight-use-package 'git)
+(straight-use-package 'gist)
+(straight-use-package 'gh)
+
+(straight-use-package 'git-gutter)
+(straight-use-package 'fringe-helper)
+(straight-use-package 'git-gutter-fringe)
+
+;;;; prog modes ;;;;
+(straight-use-package 'haskell-mode)
+(straight-use-package 'ghc)
+(straight-use-package 'ghci-completion)
+
+(straight-use-package 'io-mode)
+(straight-use-package 'jade-mode)
+(straight-use-package '(js2-mode :type git :host github :repo "mooz/js2-mode"))
+(straight-use-package 'json-mode)
+(straight-use-package 'web-mode)
+(straight-use-package 'markdown-mode)
+(straight-use-package 'yaml-mode)
+(straight-use-package 'ruby-mode)
+(straight-use-package 'slim-mode)
+(straight-use-package 'haml-mode)
+(straight-use-package 'rust-mode)
+(straight-use-package 'swift-mode)
+(straight-use-package 'typescript-mode)
+(straight-use-package 'php-mode)
+(straight-use-package 'tide)
+(straight-use-package 'scss-mode)
+
+;;;; ruby ;;;;
+(straight-use-package 'rubocop)
+(straight-use-package 'enh-ruby-mode)
+
+(straight-use-package 'rainbow-mode)
+(straight-use-package 'exec-path-from-shell)
+
+(straight-use-package 'docker-tramp)
+
 
 ;; path
 (when (memq window-system '(mac ns))
@@ -38,12 +107,8 @@
                     (cons "Ricty" "iso10646-1"))
   )
 
-
-;; add package site
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
-(package-initialize)
+;; theme
+(require 'dracula-theme)
 
 ;;;; elscreen ;;;;
 (setq elscreen-prefix-key "\C-j")
@@ -56,6 +121,12 @@
             (progn
               (local-unset-key "\C-j")
               (local-set-key "\C-J" 'eval-print-last-sexp))))
+(add-hook 'php-mode-hook
+          (lambda ()
+            (setq tab-width 2)
+            (setq c-basic-offset 2)
+            (setq indent-tabs-mode t)))
+(add-hook 'php-mode-hook 'php-enable-wordpress-coding-style)
 
 (when window-system
   (add-hook 'after-init-hook
@@ -65,13 +136,6 @@
                 nil
                 '(lambda ()
                    (set-frame-parameter nil 'fullscreen 'maximized))))))
-
-
-;;;; color-theme ;;;;
-(require 'color-theme)
-(color-theme-initialize)
-(when (display-graphic-p) (color-theme-classic))
-
 
 ;;;; linum ;;;;
 (global-linum-mode t)
@@ -180,10 +244,6 @@
 (add-hook 'scss-mode-hook
   '(lambda() (scss-custom)))
 
-;; coffee-mode ;;
-;(autoload 'coffee-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("\\.cjsx$" . coffee-mode))
 
 ;; ruby-mode ;;
 (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
@@ -215,35 +275,6 @@
             (setq-local swift-indent-offset 4)))
 
 
-;; golang
-
-(add-hook 'go-mode-hook 'flycheck-mode)
-(add-hook 'go-mode-hook
-          (lambda()
-            (add-hook 'before-save-hook' 'gofmt-before-save)
-            (local-set-key (kbd "M-.") 'godef-jump)
-            (set (make-local-variable 'company-backends) '(company-go))
-            (setq c-basic-offset 4)
-            (setq tab-width 4)))
-
-(require 'company-go)
-(add-hook 'go-mode-hook
-          (lambda()
-            (company-mode)
-            (setq company-transformers '(company-sort-by-backend-importance))
-            (setq company-idle-delay 0)
-            (setq company-minimum-prefix-length 3)
-            (setq company-selection-wrap-around t)
-            (setq completion-ignore-case t)
-            (setq company-dabbrev-downcase nil)
-            (global-set-key (kbd "C-M-i") 'company-complete)
-            (define-key company-active-map (kbd "C-n") 'company-select-next)
-            (define-key company-active-map (kbd "C-p") 'company-select-previous)
-            (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
-            (define-key company-active-map [tab] 'company-complete-selection)
-            (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
-            ))
-
 ;; rainbow mode
 (require 'rainbow-mode)
 (add-hook 'css-mode-hook  'rainbow-mode)
@@ -270,7 +301,7 @@
   (interactive)
   (set 'frame-alpha (max (- frame-alpha 5) 0))
   (update-alpha))
-(set 'frame-alpha 90)
+(set 'frame-alpha 95)
 (update-alpha)
 
 (global-set-key (kbd "C-x C-p") 'up-alpha)
@@ -278,3 +309,19 @@
 
 (setq inhibit-startup-message t)
 (cd "~/")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (docker-tramp dracula-theme yaml-mode web-mode tide swift-mode slim-mode scss-mode rust-mode rubocop rainbow-mode quickrun powerline popwin php-mode php-completion markdown-mode json-mode js2-mode jade-mode io-mode helm-ls-git helm-gtags helm-git-grep helm-ghq haml-mode git-gutter-fringe git gist ghci-completion ghc flymake-easy exec-path-from-shell erlang enh-ruby-mode elscreen company-go color-theme coffee-mode clojure-mode alchemist))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'docker-tramp-compat)
