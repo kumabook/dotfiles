@@ -109,6 +109,7 @@
 
 ;; theme
 (require 'dracula-theme)
+(load-theme 'dracula t)
 
 ;;;; elscreen ;;;;
 (setq elscreen-prefix-key "\C-j")
