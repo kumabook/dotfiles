@@ -18,3 +18,7 @@
 	lineNumber = true
 [push]
 	default = current
+[merge]
+	ff = false
+[pull]
+	ff = only

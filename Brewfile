@@ -1,5 +1,5 @@
 cask_args appdir: '/Applications'
-tap 'caskroom/cask'
+tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 
 # shell utility
@@ -21,19 +21,17 @@ brew 'haskell-stack'
 brew 'python'
 brew 'rbenv'
 brew 'ruby-build'
-cask 'java11'
+brew 'java'
 brew 'checkstyle'
 brew 'findbugs'
 brew 'nodejs'
 
 # editor
 cask 'emacs'
-brew 'cask'
 cask 'visual-studio-code'
 
 # mobile development
 brew 'carthage'
-brew 'blender/homebrew-tap/rome'
 cask 'android-sdk'
 cask 'android-studio'
 brew 'bundletool'
@@ -57,8 +55,9 @@ cask 'firefox-nightly'
 cask 'google-chrome'
 cask 'slack'
 cask 'skype'
+cask 'zoom'
 
 # font
 cask 'xquartz'
 tap 'sanemat/font'
-brew 'ricty', args: ['powerline']
+brew 'ricty', args: ['with-powerline']
