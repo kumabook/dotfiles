@@ -13,5 +13,5 @@ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 
 
 # install ricty font
-cp -f /usr/local/Cellar/ricty/4.0.1/share/fonts/Ricty*.ttf ~/Library/Fonts/
+cp -f /opt/homebrew/Cellar/ricty/4.1.1/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
