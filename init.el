@@ -174,7 +174,6 @@
 (define-key global-map (kbd "C-'") 'helm-ghq)
 
 ;;;;;; helm-git-grep ;;;;;;
-(require 'helm-git-grep) ;; Not necessary if installed by package.el
 (global-set-key (kbd "C-c g") 'helm-git-grep)
 (global-set-key (kbd "C-c i") 'helm-git-grep-at-point)
 ;; Invoke `helm-git-grep' from isearch.
