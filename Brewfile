@@ -32,7 +32,6 @@ cask 'visual-studio-code'
 
 # mobile development
 brew 'carthage'
-cask 'android-sdk'
 cask 'android-studio'
 brew 'bundletool'
 brew 'ant'
@@ -47,6 +46,9 @@ brew 'amazon-ecs-cli'
 
 # misc
 brew 'libidn'
+brew 'jq'
+brew 'awscli'
+brew 'awsebcli'
 
 # utility applications
 cask 'firefox'
