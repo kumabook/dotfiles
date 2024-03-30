@@ -40,6 +40,14 @@ SAVEHIST=50000
 setopt hist_ignore_dups
 setopt share_history
 
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
 
 # key bind
 bindkey -e
