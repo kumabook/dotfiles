@@ -4,6 +4,13 @@
 (define-key global-map [?¥] [?\\])
 (global-auto-revert-mode 1)
 
+(defvar browse-url-galeon-program nil)
+(defvar browse-url-mosaic-program nil)
+(defvar browse-url-netscape-program nil)
+
+(if (version<= "26.0.50" emacs-version)
+    (global-display-line-numbers-mode))
+
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -17,6 +24,8 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(setq package-enable-at-startup nil)
 
 (straight-use-package 'dracula-theme)
 
@@ -36,14 +45,14 @@
 (straight-use-package 'popwin)
 (straight-use-package 'powerline)
 
+(straight-use-package 'reveal-in-osx-finder)
+
 ;;;; git ;;;;
 (straight-use-package 'git)
 (straight-use-package 'gist)
 (straight-use-package 'gh)
 
 (straight-use-package 'git-gutter)
-(straight-use-package 'fringe-helper)
-(straight-use-package 'git-gutter-fringe)
 
 ;;;; prog modes ;;;;
 (straight-use-package 'haskell-mode)
@@ -63,6 +72,23 @@
 (straight-use-package 'rust-mode)
 (straight-use-package 'swift-mode)
 (straight-use-package 'typescript-mode)
+;(straight-use-package 'tree-sitter)
+;(straight-use-package '(tsi :type git :host github :repo "orzechowskid/tsi.el"))
+(straight-use-package 'lsp-mode)
+(straight-use-package 'yasnippet)
+(straight-use-package 'lsp-treemacs)
+(straight-use-package 'helm-lsp)
+(straight-use-package 'projectile)
+(straight-use-package 'hydra)
+(straight-use-package 'hydra)
+(straight-use-package 'avy)
+(straight-use-package 'which-key)
+(straight-use-package 'helm-xref)
+(straight-use-package 'dap-mode)
+(straight-use-package 'zenburn-theme)
+(straight-use-package 'json-mode)
+;;(straight-use-package '(tsx-mode :type git :host github :repo "orzechowskid/tsx-mode.el"))
+
 (straight-use-package 'php-mode)
 (straight-use-package 'tide)
 (straight-use-package 'scss-mode)
@@ -74,7 +100,7 @@
 (straight-use-package 'rainbow-mode)
 (straight-use-package 'exec-path-from-shell)
 
-(straight-use-package 'docker-tramp)
+;(straight-use-package 'tramp-container)
 
 
 ;; path
@@ -122,12 +148,23 @@
             (progn
               (local-unset-key "\C-j")
               (local-set-key "\C-J" 'eval-print-last-sexp))))
-(add-hook 'php-mode-hook
-          (lambda ()
-            (setq tab-width 2)
-            (setq c-basic-offset 2)
-            (setq indent-tabs-mode t)))
+;(add-hook 'php-mode-hook
+;          (lambda ()
+;            (setq tab-width 2)
+;            (setq c-basic-offset 2)
+;            (setq indent-tabs-mode t)))
 (add-hook 'php-mode-hook 'php-enable-wordpress-coding-style)
+(add-hook 'php-mode-hook 'my-php-mode-hook)
+(defun my-php-mode-hook ()
+  "My PHP mode configuration."
+  (setq indent-tabs-mode t
+        tab-width 4
+        c-basic-offset 4))
+
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2)
+            ))
 
 (when window-system
   (add-hook 'after-init-hook
@@ -137,10 +174,6 @@
                 nil
                 '(lambda ()
                    (set-frame-parameter nil 'fullscreen 'maximized))))))
-
-;;;; linum ;;;;
-(global-linum-mode t)
-(setq linum-format "%5d ")
 
 ;;;; global ;;;;
 (autoload 'gtags-mode "gtags" "" t)
@@ -161,7 +194,6 @@
 (global-company-mode +1)
 
 ;;;; helm ;;;;
-(require 'helm-config)
 (require 'helm-files)
 (require 'helm-for-files)
 (global-set-key (kbd "C-l") 'helm-mini)
@@ -174,6 +206,7 @@
 (define-key global-map (kbd "C-'") 'helm-ghq)
 
 ;;;;;; helm-git-grep ;;;;;;
+(require 'compile)
 (global-set-key (kbd "C-c g") 'helm-git-grep)
 (global-set-key (kbd "C-c i") 'helm-git-grep-at-point)
 ;; Invoke `helm-git-grep' from isearch.
@@ -183,9 +216,10 @@
   '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
 
 ;;;; git-gutter-fringe ;;;;
-(when (display-graphic-p)
-  (require 'git-gutter-fringe)
-  (global-git-gutter-mode))
+(global-git-gutter-mode +1)
+;(when (display-graphic-p)
+;  (global-git-gutter-mode))
+
 
 ;;;; indent ;;;;
 (setq-default c-basic-offset 2
@@ -199,9 +233,14 @@
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.tsx$" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+
+(add-hook 'typescript-mode-hook (lambda () (setq typescript-indent-level 2)))
 
 (eval-after-load 'flycheck
   '(progn
@@ -229,6 +268,7 @@
   (setq web-mode-javascript-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
+  (setf (alist-get 'web-mode lsp--formatting-indent-alist) 'web-mode-code-indent-offset)
 )
 
 (add-hook 'web-mode-hook  'my-web-mode-hook)
@@ -285,8 +325,8 @@
 ;; see http://www.emacswiki.org/emacs/WhiteSpace
 (global-whitespace-mode 1)
 
-(line-number-mode t)
-(column-number-mode t)
+;(line-number-mode t)
+;(column-number-mode t)
 
 (show-paren-mode 1)
 
@@ -315,8 +355,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (docker-tramp dracula-theme yaml-mode web-mode tide swift-mode slim-mode scss-mode rust-mode rubocop rainbow-mode quickrun powerline popwin php-mode php-completion markdown-mode json-mode js2-mode jade-mode io-mode helm-ls-git helm-gtags helm-git-grep helm-ghq haml-mode git-gutter-fringe git gist ghci-completion ghc flymake-easy exec-path-from-shell erlang enh-ruby-mode elscreen company-go color-theme coffee-mode clojure-mode alchemist))))
+   '(dracula-theme yaml-mode web-mode tide swift-mode slim-mode scss-mode rust-mode rubocop rainbow-mode quickrun powerline popwin php-mode php-completion markdown-mode json-mode js2-mode jade-mode io-mode helm-ls-git helm-gtags helm-git-grep helm-ghq haml-mode git gist ghci-completion ghc flymake-easy exec-path-from-shell erlang enh-ruby-mode elscreen company-go color-theme coffee-mode clojure-mode alchemist))
+ '(warning-suppress-types '((lsp-mode) (lsp-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -324,4 +364,21 @@
  ;; If there is more than one, they won't work right.
  )
 
-(require 'docker-tramp-compat)
+;(require 'docker-tramp-compat)
+
+(require 'reveal-in-osx-finder)
+(global-set-key (kbd "C-c o") 'reveal-in-osx-finder)
+
+
+(require 'helm-xref)
+(which-key-mode)
+(add-hook 'prog-mode-hook #'lsp)
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      create-lockfiles nil) ;; lock files will kill `npm start'
+(with-eval-after-load 'lsp-mode
+  (require 'dap-chrome)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (yas-global-mode))
