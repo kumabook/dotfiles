@@ -1,6 +1,5 @@
 cask_args appdir: '/Applications'
-tap 'homebrew/cask'
-tap 'homebrew/cask-versions'
+tap 'homebrew/cask-fonts'
 
 # shell utility
 brew 'zsh'
@@ -59,7 +58,7 @@ cask 'slack'
 cask 'skype'
 cask 'zoom'
 
-# font
-cask 'xquartz'
-tap 'sanemat/font'
-brew 'ricty', args: ['with-powerline']
+# fonts
+
+brew 'font-hackgen'
+brew 'font-hackgen-nerd'
