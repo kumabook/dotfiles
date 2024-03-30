@@ -24,6 +24,7 @@ brew 'java'
 brew 'checkstyle'
 brew 'spotbugs'
 brew 'nodejs'
+brew 'asdf'
 
 # editor
 cask 'emacs'
