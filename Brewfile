@@ -22,7 +22,7 @@ brew 'rbenv'
 brew 'ruby-build'
 brew 'java'
 brew 'checkstyle'
-brew 'findbugs'
+brew 'spotbugs'
 brew 'nodejs'
 
 # editor
