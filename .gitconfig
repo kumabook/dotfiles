@@ -1,6 +1,7 @@
 [core]
 	autocrlf = input
 	excludesfile = /Users/kumabook/.gitignore
+	ignorecase = false
 [color]
 	ui = true
 [user]
@@ -19,6 +20,9 @@
 [push]
 	default = current
 [merge]
-	ff = false
+	ff = only
 [pull]
 	ff = only
+
+[includeIf "gitdir:~/src_sub/"]
+    path = ~/.gitconfig_sub
