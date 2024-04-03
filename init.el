@@ -36,6 +36,8 @@
 (straight-use-package 'helm-ghq)
 
 (straight-use-package 'company)
+(straight-use-package 'projectile)
+(straight-use-package 'helm-projectile)
 (straight-use-package 'elscreen)
 
 (straight-use-package 'flymake-easy)
@@ -74,34 +76,26 @@
 (straight-use-package 'typescript-mode)
 ;(straight-use-package 'tree-sitter)
 ;(straight-use-package '(tsi :type git :host github :repo "orzechowskid/tsi.el"))
-(straight-use-package 'lsp-mode)
-(straight-use-package 'yasnippet)
-(straight-use-package 'lsp-treemacs)
-(straight-use-package 'helm-lsp)
-(straight-use-package 'projectile)
-(straight-use-package 'hydra)
-(straight-use-package 'hydra)
-(straight-use-package 'avy)
+(straight-use-package 'eglot)
+;(straight-use-package 'projectile)
+;(straight-use-package 'hydra)
+;(straight-use-package 'avy)
 (straight-use-package 'which-key)
 (straight-use-package 'helm-xref)
 (straight-use-package 'dap-mode)
-(straight-use-package 'zenburn-theme)
 (straight-use-package 'json-mode)
-;;(straight-use-package '(tsx-mode :type git :host github :repo "orzechowskid/tsx-mode.el"))
 
 (straight-use-package 'php-mode)
-(straight-use-package 'tide)
 (straight-use-package 'scss-mode)
 
 ;;;; ruby ;;;;
-(straight-use-package 'rubocop)
 (straight-use-package 'enh-ruby-mode)
 
 (straight-use-package 'rainbow-mode)
+(straight-use-package 'rainbow-delimiters)
 (straight-use-package 'exec-path-from-shell)
 
 ;(straight-use-package 'tramp-container)
-
 
 ;; path
 (when (memq window-system '(mac ns))
@@ -142,56 +136,41 @@
 (global-set-key [(C-tab)] 'elscreen-next)
 (global-set-key [(C-S-tab)] 'elscreen-previous)
 (elscreen-start)
-; disable ctrl-j on lisp-interaction-mode
-(add-hook 'lisp-interaction-mode-hook
-          (lambda ()
-            (progn
-              (local-unset-key "\C-j")
-              (local-set-key "\C-J" 'eval-print-last-sexp))))
-;(add-hook 'php-mode-hook
-;          (lambda ()
-;            (setq tab-width 2)
-;            (setq c-basic-offset 2)
-;            (setq indent-tabs-mode t)))
-(add-hook 'php-mode-hook 'php-enable-wordpress-coding-style)
-(add-hook 'php-mode-hook 'my-php-mode-hook)
-(defun my-php-mode-hook ()
-  "My PHP mode configuration."
-  (setq indent-tabs-mode t
-        tab-width 4
-        c-basic-offset 4))
 
-(add-hook 'css-mode-hook
-          (lambda ()
-            (setq css-indent-offset 2)
-            ))
+;;;; eglot ;;;;
+
+(require 'eglot)
+
+(add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio")))
+(add-to-list 'eglot-server-programs '(enh-ruby-mode . ("solargraph" "stdio")))
+(global-set-key [(s-return)] 'eglot-code-actions)
 
 (when window-system
   (add-hook 'after-init-hook
-            '(lambda ()
+            #'(lambda ()
                (run-with-idle-timer
                 0.1
                 nil
-                '(lambda ()
+                #'(lambda ()
                    (set-frame-parameter nil 'fullscreen 'maximized))))))
 
 ;;;; global ;;;;
 (autoload 'gtags-mode "gtags" "" t)
 (setq gtags-mode-hook
-      '(lambda ()
+      #'(lambda ()
          (local-set-key "\M-t" 'gtags-find-tag)
          (local-set-key "\M-r" 'gtags-find-rtag)
          (local-set-key "\M-s" 'gtags-find-symbol)
          (local-set-key "\C-t" 'gtags-pop-stack)
          ))
 (add-hook 'c-mode-common-hook
-          '(lambda()
+          #'(lambda()
              (gtags-mode 1)
              (gtags-make-complete-list)
              ))
 
 ;;;;;; company-mode ;;;;
-(global-company-mode +1)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;;;; helm ;;;;
 (require 'helm-files)
@@ -203,7 +182,7 @@
 ;(add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
 ;;;;;; helm-ghq ;;;;;;
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
-(define-key global-map (kbd "C-'") 'helm-ghq)
+(define-key global-map (kbd "C-]") 'helm-ghq)
 
 ;;;;;; helm-git-grep ;;;;;;
 (require 'compile)
@@ -215,6 +194,13 @@
 (eval-after-load 'helm
   '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
 
+;;;; projectile ;;;;
+
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(define-key global-map (kbd "C-'") 'helm-projectile)
+
 ;;;; git-gutter-fringe ;;;;
 (global-git-gutter-mode +1)
 ;(when (display-graphic-p)
@@ -225,6 +211,13 @@
 (setq-default c-basic-offset 2
               tab-width 2
               indent-tabs-mode nil)
+
+;disable ctrl-j on lisp-interaction-mode
+(add-hook 'lisp-interaction-mode-hook
+         (lambda ()
+           (progn
+             (local-unset-key "\C-j")
+             (local-set-key "\C-J" 'eval-print-last-sexp))))
 
 ;(require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -268,10 +261,28 @@
   (setq web-mode-javascript-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
-  (setf (alist-get 'web-mode lsp--formatting-indent-alist) 'web-mode-code-indent-offset)
+  (eglot-ensure)
 )
 
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;(add-hook 'php-mode-hook
+;          (lambda ()
+;            (setq tab-width 2)
+;            (setq c-basic-offset 2)
+;            (setq indent-tabs-mode t)))
+(add-hook 'php-mode-hook 'php-enable-wordpress-coding-style)
+(add-hook 'php-mode-hook 'my-php-mode-hook)
+(defun my-php-mode-hook ()
+ "My PHP mode configuration."
+ (setq indent-tabs-mode t
+       tab-width 4
+       c-basic-offset 4))
+
+(add-hook 'css-mode-hook
+         (lambda ()
+           (setq css-indent-offset 2)
+           ))
 
 ;; scss mode
 (defun scss-custom ()
@@ -282,12 +293,20 @@
    )
   )
 (add-hook 'scss-mode-hook
-  '(lambda() (scss-custom)))
+  #'(lambda() (scss-custom)))
 
 
 ;; ruby-mode ;;
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Fastfile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Podfile$" . enh-ruby-mode))
+(add-hook 'enh-ruby-mode-hook 'eglot-ensure)
+(add-hook 'enh-ruby-mode-hook
+          #'(lambda ()
+             (setq flycheck-checker 'ruby-rubocop)
+             (flycheck-mode 1)))
 (setq ruby-insert-encoding-magic-comment nil)
 
 ;; prolog-mode ;;
@@ -325,9 +344,6 @@
 ;; see http://www.emacswiki.org/emacs/WhiteSpace
 (global-whitespace-mode 1)
 
-;(line-number-mode t)
-;(column-number-mode t)
-
 (show-paren-mode 1)
 
 (defun update-alpha () (set-frame-parameter nil 'alpha frame-alpha))
@@ -349,22 +365,6 @@
 
 (setq inhibit-startup-message t)
 (cd "~/")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(dracula-theme yaml-mode web-mode tide swift-mode slim-mode scss-mode rust-mode rubocop rainbow-mode quickrun powerline popwin php-mode php-completion markdown-mode json-mode js2-mode jade-mode io-mode helm-ls-git helm-gtags helm-git-grep helm-ghq haml-mode git gist ghci-completion ghc flymake-easy exec-path-from-shell erlang enh-ruby-mode elscreen company-go color-theme coffee-mode clojure-mode alchemist))
- '(warning-suppress-types '((lsp-mode) (lsp-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;(require 'docker-tramp-compat)
 
 (require 'reveal-in-osx-finder)
 (global-set-key (kbd "C-c o") 'reveal-in-osx-finder)
@@ -372,13 +372,24 @@
 
 (require 'helm-xref)
 (which-key-mode)
-(add-hook 'prog-mode-hook #'lsp)
+
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
       company-idle-delay 0.0
       company-minimum-prefix-length 1
       create-lockfiles nil) ;; lock files will kill `npm start'
-(with-eval-after-load 'lsp-mode
-  (require 'dap-chrome)
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (yas-global-mode))
+
+;; copilot
+
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
+  :ensure t)
+
+(add-hook 'prog-mode-hook 'copilot-mode)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(add-to-list 'copilot-major-mode-alist '("enh-ruby" . "ruby"))
+(add-hook 'copilot-mode-hook
+          (lambda ()
+            (progn
+              (setq-local copilot--indent-warning-printed-p t))))
