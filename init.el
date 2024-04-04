@@ -38,7 +38,6 @@
 (straight-use-package 'company)
 (straight-use-package 'projectile)
 (straight-use-package 'helm-projectile)
-(straight-use-package 'elscreen)
 
 (straight-use-package 'flymake-easy)
 (straight-use-package 'flycheck)
@@ -131,11 +130,11 @@
 (require 'dracula-theme)
 (load-theme 'dracula t)
 
-;;;; elscreen ;;;;
-(setq elscreen-prefix-key "\C-j")
-(global-set-key [(C-tab)] 'elscreen-next)
-(global-set-key [(C-S-tab)] 'elscreen-previous)
-(elscreen-start)
+;; tab-bar
+(global-set-key [(C-tab)] 'tab-next)
+(global-set-key [(C-S-tab)] 'tab-previous)
+(global-set-key "\M-t" 'tab-new)
+(global-set-key "\M-w" 'tab-close)
 
 ;;;; eglot ;;;;
 
@@ -211,13 +210,6 @@
 (setq-default c-basic-offset 2
               tab-width 2
               indent-tabs-mode nil)
-
-;disable ctrl-j on lisp-interaction-mode
-(add-hook 'lisp-interaction-mode-hook
-         (lambda ()
-           (progn
-             (local-unset-key "\C-j")
-             (local-set-key "\C-J" 'eval-print-last-sexp))))
 
 ;(require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
