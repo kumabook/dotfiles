@@ -5,7 +5,7 @@
 [color]
 	ui = true
 [user]
-	name = Hiroki Kumamoto
+	name = kumabook
 	email = kumabook@live.jp
 [filter "media"]
 	clean = git media clean %f
