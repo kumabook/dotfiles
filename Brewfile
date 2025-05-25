@@ -6,27 +6,29 @@ tap 'homebrew/cask-versions'
 brew 'zsh-completions'
 brew 'zsh-autosuggestions'
 brew 'ghq'
-cask 'iterm2'
+cask 'iterm2-nightly'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'peco'
-brew 'hub'
-brew  'z'
-brew 'direnv'
+brew 'gh'
+brew 'z'
 
 # programming language
 brew 'java'
 brew 'checkstyle'
 brew 'spotbugs'
-brew 'mise'
+brew 'direnv'
 
 # editor
 cask 'emacs'
 cask 'visual-studio-code'
+tap 'dracula/install'
+cask 'dracula-xcode'
 
 # mobile development
 cask 'android-studio'
 brew 'bundletool'
+brew 'firebase-cli'
 
 # server developement
 brew 'libpq'
@@ -40,15 +42,23 @@ brew 'amazon-ecs-cli'
 # misc
 brew 'libidn'
 brew 'jq'
+tap 'kardolus/chatgpt-cli'
+brew 'chatgpt-cli'
+brew 'ffmpeg'
+brew 'pngquant'
 
 # utility applications
 cask 'firefox-developer-edition'
 cask 'google-chrome'
+cask 'stats'
 cask 'slack'
 cask 'zoom'
 cask 'microsoft-teams'
+cask 'spotify'
+cask 'figma'
+cask 'hammerspoon'
 
 # fonts
 
-brew 'font-hackgen'
-brew 'font-hackgen-nerd'
+cask 'font-hackgen'
+cask 'font-hackgen-nerd'
