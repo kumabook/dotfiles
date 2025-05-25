@@ -73,6 +73,8 @@
 (straight-use-package 'rust-mode)
 (straight-use-package 'swift-mode)
 (straight-use-package 'typescript-mode)
+(straight-use-package 'kotlin-mode)
+(straight-use-package 'lua-mode)
 ;(straight-use-package 'tree-sitter)
 ;(straight-use-package '(tsi :type git :host github :repo "orzechowskid/tsi.el"))
 (straight-use-package 'eglot)
@@ -88,7 +90,7 @@
 (straight-use-package 'scss-mode)
 
 ;;;; ruby ;;;;
-(straight-use-package 'enh-ruby-mode)
+;(straight-use-package 'enh-ruby-mode)
 
 (straight-use-package 'rainbow-mode)
 (straight-use-package 'rainbow-delimiters)
@@ -99,6 +101,9 @@
 ;; path
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+;; symlinks
+(setq vc-follow-symlinks t)
 
 ;; replace Command and Option
 (setq ns-command-modifier (quote meta))
@@ -134,14 +139,18 @@
 (global-set-key [(C-tab)] 'tab-next)
 (global-set-key [(C-S-tab)] 'tab-previous)
 (global-set-key "\M-t" 'tab-new)
+(global-set-key (kbd "C-S-w") 'kill-ring-save)
+(global-set-key (kbd "s-w") 'kill-ring-save)
 (global-set-key "\M-w" 'tab-close)
+(global-set-key "\M-T" 'tab-bar-undo-close-tab)
 
 ;;;; eglot ;;;;
 
 (require 'eglot)
 
 (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio")))
-(add-to-list 'eglot-server-programs '(enh-ruby-mode . ("solargraph" "stdio")))
+(add-to-list 'eglot-server-programs '(ruby-mode . ("solargraph" "stdio")))
+(add-to-list 'eglot-server-programs '(prisma-mode . ("prisma-language-server" "--stdio")))
 (global-set-key [(s-return)] 'eglot-code-actions)
 
 (when window-system
@@ -289,13 +298,13 @@
 
 
 ;; ruby-mode ;;
-(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Fastfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Podfile$" . enh-ruby-mode))
-(add-hook 'enh-ruby-mode-hook 'eglot-ensure)
-(add-hook 'enh-ruby-mode-hook
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Fastfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Podfile$" . ruby-mode))
+(add-hook 'ruby-mode-hook 'eglot-ensure)
+(add-hook 'ruby-mode-hook
           #'(lambda ()
              (setq flycheck-checker 'ruby-rubocop)
              (flycheck-mode 1)))
@@ -378,8 +387,20 @@
   :ensure t)
 
 (add-hook 'prog-mode-hook 'copilot-mode)
+(setq copilot-idle-delay 0.5)
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
+(define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
+(define-key copilot-completion-map (kbd "C-n") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "C-p") 'copilot-previous-completion)
+
+(add-to-list 'copilot-indentation-alist '(prog-mode 2))
+(add-to-list 'copilot-indentation-alist '(org-mode 2))
+(add-to-list 'copilot-indentation-alist '(text-mode 2))
+(add-to-list 'copilot-indentation-alist '(closure-mode 2))
+(add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
+
 (add-to-list 'copilot-major-mode-alist '("enh-ruby" . "ruby"))
 (add-hook 'copilot-mode-hook
           (lambda ()
