@@ -38,6 +38,7 @@ cask 'docker'
 brew 'awscli'
 brew 'awsebcli'
 brew 'amazon-ecs-cli'
+brew 'vercel-cli'
 
 # misc
 brew 'libidn'
