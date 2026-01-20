@@ -2,6 +2,10 @@ if [ -e /usr/local/share/zsh-completions ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
+if [ -e ~/.zsh/completion ]; then
+    fpath=(~/.zsh/completion $fpath)
+fi
+
 autoload -U compinit
 autoload -Uz add-zsh-hook
 compinit -u
@@ -31,6 +35,7 @@ setopt auto_pushd
 setopt list_packed
 setopt noautoremoveslash
 setopt nolistbeep
+setopt ignoreeof
 
 # history
 autoload history-search-end
@@ -166,3 +171,15 @@ if [ -f '/Users/kumabook/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kumabo
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/kumabook/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kumabook/google-cloud-sdk/completion.zsh.inc'; fi
+
+source <(docker completion zsh)
+source <(kubectl completion zsh)
+
+rails() {
+  docker compose exec web rails "$@"
+}
+
+# append completions to fpath
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
