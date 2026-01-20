@@ -1,4 +1,4 @@
-;; basic key bind
+;; Basic key bind
 (keyboard-translate ?\C-h ?\C-?)
 (global-unset-key "\C-z")
 (define-key global-map [?¥] [?\\])
@@ -406,3 +406,61 @@
           (lambda ()
             (progn
               (setq-local copilot--indent-warning-printed-p t))))
+
+(use-package prisma-mode
+  :straight (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+(add-hook 'prisma-mode-hook 'eglot-ensure)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("d35471aab9bbf8786bdc0352c171f9aba63bd54dfb3a1140d7b36f38842ffa72" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+;; markdown preview
+
+(setq markdown-command "pandoc --template=github --embed-resources --css /Users/kumabook/.pandoc/github-markdown.css")
+
+(defun my/markdown-preview-xwidget ()
+  (interactive)
+  (let* ((output (concat (file-name-sans-extension buffer-file-name) ".html"))
+         (url (concat "file://" output))
+         (source-buffer (current-buffer)))
+    (shell-command
+     (format "pandoc --template=github --embed-resources --css /Users/kumabook/.pandoc/github-markdown.css %s -o %s"
+             buffer-file-name output))
+    (let ((xw-buffer (seq-find (lambda (buf)
+                                 (with-current-buffer buf
+                                   (eq major-mode 'xwidget-webkit-mode)))
+                               (buffer-list))))
+      (if xw-buffer
+          (with-current-buffer xw-buffer
+            (xwidget-webkit-reload))
+        (progn
+          (delete-other-windows)
+          (split-window-right)
+          (other-window 1)
+          (xwidget-webkit-browse-url url)
+          (select-window (get-buffer-window source-buffer)))))))
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (auto-revert-mode 1)
+            (local-set-key (kbd "C-c p") 'my/markdown-preview-xwidget)
+            (add-hook 'after-save-hook 'my/markdown-preview-xwidget nil t)
+            (add-hook 'after-revert-hook 'my/markdown-preview-xwidget nil t)))
+
+;; xwidget auto copy on drag
+(with-eval-after-load 'xwidget
+  (define-key xwidget-webkit-mode-map [drag-mouse-1]
+    (lambda (event)
+      (interactive "e")
+      (run-at-time 0.1 nil 'xwidget-webkit-copy-selection-as-kill))))
