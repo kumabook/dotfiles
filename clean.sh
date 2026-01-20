@@ -10,3 +10,5 @@ rm ~/.screenrc
 rm ~/Brewfile
 rm ~/.gitconfig
 rm ~/.gitignore
+rm ~/.hammerspoon/init.lua
+rm ~/.config/ghostty/config

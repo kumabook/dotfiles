@@ -13,3 +13,6 @@ mkdir ~/.emacs.d/
 ln -s `pwd`/init.el ~/.emacs.d/init.el
 ln -s `pwd`/Cask ~/.emacs.d/Cask
 ln -s `pwd`/init.lua ~/.hammerspoon/init.lua
+
+mkdir ~/.config/ghostty/
+ln -s `pwd`/ghostty.config ~/.config/ghostty/config
