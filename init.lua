@@ -132,3 +132,161 @@ hs.hotkey.bind(mash, "C", function()
 
   hs.mouse.setAbsolutePosition({x = centerX, y = centerY})
 end)
+
+local clipboardHistoryFile = os.getenv("HOME") .. "/.hammerspoon/clipboard_history.json"
+local clipboardFavoritesFile = os.getenv("HOME") .. "/.hammerspoon/clipboard_favorites.json"
+local clipboardHistory = {}
+local clipboardFavorites = {}
+local maxHistorySize = 50
+
+local function loadClipboardFavorites()
+  local file = io.open(clipboardFavoritesFile, "r")
+  if file then
+    local content = file:read("*a")
+    file:close()
+    if content and content ~= "" then
+      local ok, result = pcall(hs.json.decode, content)
+      if ok and result then
+        clipboardFavorites = result
+      end
+    end
+  end
+end
+
+local function saveClipboardFavorites()
+  local ok, encoded = pcall(hs.json.encode, clipboardFavorites)
+  if ok and encoded then
+    local file = io.open(clipboardFavoritesFile, "w")
+    if file then
+      file:write(encoded)
+      file:close()
+    end
+  end
+end
+
+local function loadClipboardHistory()
+  local file = io.open(clipboardHistoryFile, "r")
+  if file then
+    local content = file:read("*a")
+    file:close()
+    if content and content ~= "" then
+      local ok, result = pcall(hs.json.decode, content)
+      if ok and result then
+        clipboardHistory = result
+      end
+    end
+  end
+end
+
+local function saveClipboardHistory()
+  local ok, encoded = pcall(hs.json.encode, clipboardHistory)
+  if ok and encoded then
+    local file = io.open(clipboardHistoryFile, "w")
+    if file then
+      file:write(encoded)
+      file:close()
+    end
+  end
+end
+
+loadClipboardHistory()
+loadClipboardFavorites()
+
+local clipboardWatcher = hs.pasteboard.watcher.new(function()
+  local ok, err = pcall(function()
+    local content = hs.pasteboard.getContents()
+    if type(content) ~= "string" or content == "" then return end
+    if #content > 10000 then return end
+    if content:find("[\0-\8\11\12\14-\31]") then return end
+    if clipboardHistory[1] and clipboardHistory[1].text == content then return end
+
+    table.insert(clipboardHistory, 1, {
+      text = content,
+      time = os.time()
+    })
+    if #clipboardHistory > maxHistorySize then
+      table.remove(clipboardHistory)
+    end
+    saveClipboardHistory()
+  end)
+end):start()
+
+local commands = {
+  { text = "Reload Config", id = "reload" },
+  { text = "Lock Screen", id = "lock" },
+  { text = "Sleep", id = "sleep" },
+  { text = "Restart Clipboard Watcher", id = "restart_watcher" },
+  { text = "Clear Clipboard History", id = "clear_history" },
+}
+
+local commandActions = {
+  reload = function() hs.reload() end,
+  lock = function() hs.caffeinate.lockScreen() end,
+  sleep = function() hs.caffeinate.systemSleep() end,
+  restart_watcher = function()
+    if clipboardWatcher then
+      clipboardWatcher:stop()
+      clipboardWatcher:start()
+      hs.alert.show("Clipboard watcher restarted")
+    end
+  end,
+  clear_history = function()
+    clipboardHistory = {}
+    saveClipboardHistory()
+    hs.alert.show("Clipboard history cleared")
+  end,
+}
+
+hs.hotkey.bind(mash, "space", function()
+  hs.chooser.new(function(choice)
+    if choice and commandActions[choice.id] then
+      commandActions[choice.id]()
+    end
+  end):choices(commands):show()
+end)
+
+hs.hotkey.bind(mash, "Y", function()
+  local choices = {}
+
+  for i, item in ipairs(clipboardFavorites) do
+    table.insert(choices, {
+      text = item.text,
+      subText = "★ Favorite",
+      isFavorite = true
+    })
+  end
+
+  for i, item in ipairs(clipboardHistory) do
+    table.insert(choices, {
+      text = item.text,
+      subText = os.date("%Y/%m/%d %H:%M", item.time),
+      isFavorite = false
+    })
+  end
+
+  local chooser = hs.chooser.new(function(choice)
+    if not choice then return end
+
+    local mods = hs.eventtap.checkKeyboardModifiers()
+    if mods.shift then
+      if choice.isFavorite then
+        for i, fav in ipairs(clipboardFavorites) do
+          if fav.text == choice.text then
+            table.remove(clipboardFavorites, i)
+            break
+          end
+        end
+        hs.alert.show("Removed from favorites")
+      else
+        table.insert(clipboardFavorites, 1, { text = choice.text })
+        hs.alert.show("Added to favorites")
+      end
+      saveClipboardFavorites()
+    else
+      hs.pasteboard.setContents(choice.text)
+      hs.eventtap.keyStrokes(choice.text)
+    end
+  end)
+
+  chooser:choices(choices):show()
+end)
